@@ -30,12 +30,7 @@
             </form>
                 <thead>
                     <tr>
-                        <th>Idioma</th>
-                        <th>Estado de progreso</th>
-                        <th>Calificación</th>
-                        <th>ID de artículo</th>
-                        <th>Promedio</th>
-                        <th>País/región</th>
+
                         <th>Count(*)</th>
                         
                     </tr>
@@ -56,40 +51,34 @@
                     $sql = "";
 
                     if (isset($_POST['btnConsulta1'])) {
-                        $sql = "SELECT `reporte_cursos`.`Idioma`, `reporte_horas_historico_1`.`Estado de progreso`, `reporte_horas_historico_1`.`Calificación`, COUNT(*) as Count FROM `reporte_cursos`
-                        INNER JOIN `reporte_horas_historico_1` ON `reporte_cursos`.`ID de artículo` = `reporte_horas_historico_1`.`ID de artículo`
-                        WHERE `reporte_cursos`.`Idioma` = 'Inglés'";
+                        $sql = "SELECT COUNT(`Idioma`) as `Count(*)` FROM `reporte_cursos` WHERE `Idioma` = 'Inglé';";
                     }
                     if (isset($_POST['btnConsulta2'])) {
-                        $sql = "SELECT COUNT(*) FROM reporte_cursos WHERE Idioma = 'Español';";
+                        $sql = "SELECT COUNT(`Idioma`) as `Count(*)` FROM `reporte_cursos` WHERE `Idioma` = 'Españo';";
                     }
                     if (isset($_POST['btnConsulta3'])) {
-                        $sql = "SELECT COUNT(*) FROM reporte_cursos WHERE Idioma = 'Holandés';";
+                        $sql = "SELECT COUNT(`Idioma`) as `Count(*)` FROM `reporte_cursos` WHERE `Idioma` = 'Holandé';";
                     }
                     if (isset($_POST['btnConsulta4'])) {
-                        $sql = "SELECT COUNT(*) FROM reporte_cursos WHERE Idioma = 'Francés';";
+                        $sql = "SELECT COUNT(`Idioma`) as `Count(*)` FROM reporte_cursos WHERE Idioma = 'Francé';";
                     }
                     if (isset($_POST['btnConsulta5'])) {
-                        $sql = "SELECT COUNT(*) AS Cantidad FROM reporte_horas_historico_1 WHERE `Estado de progreso` = 'Aprobado';";
+                        $sql = "SELECT COUNT(`Estado de progreso`) as `Count(*)` FROM reporte_horas_historico_1 WHERE `Estado de progreso` LIKE '%Aprobado%';";
                     }
                     if (isset($_POST['btnConsulta6'])) {
-                        $sql = "SELECT COUNT(*) FROM reporte_horas_historico_1 WHERE `Estado de progreso` <> 'Aprobado';";
+                        $sql = "SELECT COUNT(`Estado de progreso`) as `Count(*)` FROM reporte_horas_historico_1 WHERE `Estado de progreso` LIKE '%No aprobado%';";
                     }
                     if (isset($_POST['btnConsulta7'])) {
-                        $sql = "SELECT AVG(Calificación) FROM reporte_horas_historico_1 WHERE País/región = 'Colombia';";
-                        $promedio = true;
+                        $sql = "SELECT AVG(`Calificación`) as `Count(*)` FROM reporte_horas_historico_1 WHERE `País/región` = 'Colombia';";
                     }
                     if (isset($_POST['btnConsulta8'])) {
-                        $sql = "SELECT AVG(Calificación) AS Promedio FROM reporte_horas_historico_1 WHERE País/región = 'Costa Rica';";
-                        $promedio = true;
+                        $sql = "SELECT AVG(`Calificación`) as `Count(*)` FROM `reporte_horas_historico_1` WHERE `País/región` = 'Costa Rica';";
                     }
                     if (isset($_POST['btnConsulta9'])) {
-                        $sql = "SELECT AVG(Calificación) AS Promedio FROM reporte_horas_historico_1 WHERE País/región = 'Honduras';";
-                        $promedio = true;
+                        $sql = "SELECT AVG(`Calificación`) as `Count(*)` FROM reporte_horas_historico_1 WHERE `País/región` = 'Honduras';";
                     }
                     if (isset($_POST['btnConsulta10'])) {
-                        $sql = "SELECT AVG(Calificación) AS Promedio FROM reporte_horas_historico_1 WHERE País/región = 'Panamá';";
-                        $promedio = true;
+                        $sql = "SELECT AVG(`Calificación`) as `Count(*)` FROM reporte_horas_historico_1 WHERE `País/región` = 'Panamá';";
                     }
 
                     $result = $conexion->query($sql);
@@ -98,22 +87,10 @@
                         die("Consulta invalida:". $conexion->error);
                     }else{
                         while($row = $result->fetch_assoc()){
-                            $idioma = $row['Idioma'];
-                            $estProg = $row['Estado de progreso'];
-                            $califi = $row['Calificación'];
-                            $idAr = $row['ID de artículo'];
-                            $promedio = $row['Promedio'];
-                            $paRe = $row['País/región'];
                             $count = $row['Count(*)'];
                             echo '
                             <tr>
-                            <th scope="row">'.$idioma.'</th>
-                            <td>'.$estProg.'</td>
-                            <td>'.$califi.'</td>
-                            <td>'.$idAr.'</td>
-                            <td>'.$promedio.'</td>
-                            <td>'.$paRe.'</td>
-                            <td>'.$count.'</td>
+                            <th scope="row">'.$count.'</th>
                             </tr>
                             ';
                             }
